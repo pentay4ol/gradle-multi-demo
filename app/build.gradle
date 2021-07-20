@@ -1,0 +1,12 @@
+dependencies {
+    implementation  project(':core')
+}
+// jar {
+//     manifest {
+//         attributes 'Main-Class': 'cn.myo.app.MainClass'
+//     }
+// }
+
+application {
+    mainClass = 'cn.myo.app.MainClass'
+}

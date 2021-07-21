@@ -1,5 +1,7 @@
 ## gradle 多模块
 
+**特别提示：项目在windows下编译的时候需要放在C盘，放到其他盘符会出现`build cache fail`的异常** 
+
 ### 1. 设置
 
 - 创建项目名称 `mkdir demo && cd demo`

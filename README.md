@@ -4,7 +4,7 @@
 
 ### 1. 设置
 
-- 创建项目名称 `mkdir demo && cd demo`
+- 创建项目名称 `mkdir gradle-muti-demo && cd gradle-muti-demo`
 - 根目录下创建文件 `settings.gradle`
 - 根目录下创建目录 `mkdir -p app/src/main/java && mkdir -p core/src/main/java`
 
@@ -46,4 +46,35 @@ application {
 #### 1.4 执行测试
 ```
 gradle clean && gradle :app:run
+```
+
+#### 1.5 多模块状态下合并打包
+
+从stackoverflow得到的答案：
+
+[https://stackoverflow.com/questions/48887980/gradle-package-multi-project-into-a-single-jar](https://stackoverflow.com/questions/48887980/gradle-package-multi-project-into-a-single-jar)
+
+```
+/****************************************
+ * Single library jar containing all sub projects and 3rd party dependencies
+ ****************************************/
+configurations {
+    childJars
+}
+
+dependencies {
+    subprojects.each {
+        childJars project(it.path)
+    }
+}
+
+jar {
+    dependsOn configurations.childJars
+    from { configurations.childJars.collect { zipTree(it) } }
+}
+```
+
+```
+gradle clean && gradle build
+java -jar build/libs/gradle-muti-demo.jar
 ```

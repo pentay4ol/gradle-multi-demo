@@ -1,4 +1,4 @@
-subprojects {
+allprojects {
     apply plugin: 'java'
     apply plugin: 'application'
 
@@ -6,4 +6,25 @@ subprojects {
 
 repositories {
     mavenCentral()
+}
+
+/****************************************
+ * Single library jar containing all sub projects and 3rd party dependencies
+ ****************************************/
+configurations {
+    childJars
+}
+
+dependencies {
+    subprojects.each {
+        childJars project(it.path)
+    }
+}
+
+jar {
+    dependsOn configurations.childJars
+    from { configurations.childJars.collect { zipTree(it) } }
+    manifest {
+         attributes "Main-Class": "cn.myo.app.MainClass"
+    }
 }

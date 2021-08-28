@@ -71,6 +71,8 @@ dependencies {
 jar {
     dependsOn configurations.childJars
     from { configurations.childJars.collect { zipTree(it) } }
+    exclude '/META-INF/**' // 
+    manifest { attributes 'Main-Class' : 'cn.myo.app.MainClass' }
 }
 ```
 
